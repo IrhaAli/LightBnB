@@ -26,7 +26,7 @@ $(() => {
     logIn(data)
       .then(json => {
         if (!json.user) {
-          views_manager.show('error', `Failed to login ${json}`);
+          views_manager.show('error', `Failed to login`);
           return;
         }
         // Update the header to the user logged in and show their listings
