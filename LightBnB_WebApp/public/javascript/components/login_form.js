@@ -1,5 +1,5 @@
 $(() => {
-
+  // Login form HTML
   const $logInForm = $(`
   <form id="login-form" class="login-form">
       <p>Login</p>
@@ -17,29 +17,27 @@ $(() => {
       </div>
     </form>
   `);
-
   window.$logInForm = $logInForm;
 
+  // What to do once login form is submitted
   $logInForm.on('submit', function(event) {
     event.preventDefault();
-
     const data = $(this).serialize();
     logIn(data)
       .then(json => {
-        console.log(json);
         if (!json.user) {
-          views_manager.show('error', 'Failed to login');
+          views_manager.show('error', `Failed to login ${json}`);
           return;
         }
-        console.log(json.user);
+        // Update the header to the user logged in and show their listings
         header.update(json.user);
         views_manager.show('listings');
       });
   });
 
+  // What to do when Cancel button login form is pressed
   $('body').on('click', '#login-form__cancel', function() {
     views_manager.show('listings');
     return false;
   });
-      
 });

@@ -1,7 +1,5 @@
 $(() => {
-
-  
-
+  // New property form HTML
   const $newPropertyForm = $(`
   <form action="/api/properties" method="post" id="new-property-form" class="new-property-form">
       <div class="new-property-form__field-wrapper">
@@ -86,9 +84,9 @@ $(() => {
         
     </form>
   `);
-
   window.$newPropertyForm = $newPropertyForm;
 
+  // Because new address form is special
   $newPropertyForm.addressfield({
     json: 'javascript/libraries/addressfield/addressfield.min.json',
     fields: {
@@ -100,25 +98,26 @@ $(() => {
     }
   });
 
-  $newPropertyForm.on('submit', function (event) {
+  // What to do when Create Listing form is submitted
+  $newPropertyForm.on('submit', function(event) {
     event.preventDefault();
 
     views_manager.show('none');
 
     const data = $(this).serialize();
     submitProperty(data)
-    .then(() => {
-      views_manager.show('listings');
-    })
-    .catch((error) => {
-      console.error(error);
-      views_manager.show('listings');
-    })
+      .then(() => {
+        views_manager.show('listings');
+      })
+      .catch((error) => {
+        console.error(error);
+        views_manager.show('listings');
+      });
   });
 
+  // What to do when the Cancel button on Create Listing form is clicked
   $('body').on('click', '#property-form__cancel', function() {
     views_manager.show('listings');
     return false;
   });
-  
 });

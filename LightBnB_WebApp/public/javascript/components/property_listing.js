@@ -1,6 +1,7 @@
 $(() => {
   window.propertyListing = {};
   
+  // HTML of a propery listing
   function createListing(property, isReservation) {
     return `
     <article class="property-listing">
@@ -25,7 +26,5 @@ $(() => {
       </article>
     `
   }
-
   window.propertyListing.createListing = createListing;
-
 });

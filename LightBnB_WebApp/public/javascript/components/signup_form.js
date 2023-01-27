@@ -1,5 +1,5 @@
 $(() => {
-
+  // Search form HTML
   const $signUpForm = $(`
   <form id="sign-up-form" class="sign-up-form">
         <p>Sign Up</p>
@@ -24,6 +24,7 @@ $(() => {
   `);
   window.$signUpForm = $signUpForm;
 
+  // What to do when the search form is submitted
   $signUpForm.on('submit', function(event) {
     event.preventDefault();
 
@@ -36,6 +37,7 @@ $(() => {
       });
   });
 
+  // What to do when the Cancel button on Search form is clicked
   $('body').on('click', '#sign-up-form__cancel', function() {
     views_manager.show('listings');
     return false;

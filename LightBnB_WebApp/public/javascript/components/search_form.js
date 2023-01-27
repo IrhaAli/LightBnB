@@ -1,5 +1,5 @@
 $(() => {
-
+  // Search form HTML
   const $searchPropertyForm = $(`
   <form action="/properties" method="get" id="search-property-form" class="search-property-form">
       <div class="search-property-form__field-wrapper">
@@ -27,6 +27,7 @@ $(() => {
   `);
   window.$searchPropertyForm = $searchPropertyForm;
 
+  // What to do when the search form is submitted
   $searchPropertyForm.on('submit', function(event) {
     event.preventDefault();
     const data = $(this).serialize();
@@ -37,9 +38,9 @@ $(() => {
     });
   });
 
+  // What to do when the Cancel button on Search form is clicked
   $('body').on('click', '#search-property-form__cancel', function() {
     views_manager.show('listings');
     return false;
   });
-
 });
