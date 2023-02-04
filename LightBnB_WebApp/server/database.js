@@ -71,7 +71,9 @@ exports.addUser = addUser;
 const getAllReservations = function(guest_id, limit = 10) {
   const res_deets = [guest_id, limit];
   const queryString =
-    `SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
+    `SELECT reservations.id, properties.title, properties.cost_per_night, properties.number_of_bathrooms, properties.number_of_bedrooms,
+    properties.parking_spaces, properties.cover_photo_url, properties.thumbnail_photo_url reservations.start_date,
+    avg(rating) as average_rating
       FROM reservations
       JOIN properties ON reservations.property_id = properties.id
       JOIN property_reviews ON properties.id = property_reviews.property_id
@@ -112,11 +114,11 @@ const getAllProperties = (options, limit = 10) => {
   }
   if (options.minimum_price_per_night) {
     queryParams.push(options.minimum_price_per_night * 100);
-    queryString += ` AND cost_per_night > $${queryParams.length}`;
+    queryString += ` AND cost_per_night >= $${queryParams.length}`;
   }
-  if (options.maximum_price_per_night) {
+  if (options.minimum_price_per_night) {
     queryParams.push(options.maximum_price_per_night * 100);
-    queryString += ` AND cost_per_night < $${queryParams.length}`;
+    queryString += ` AND cost_per_night <= $${queryParams.length}`;
   }
   if (options.owner_id) {
     queryParams.push(`${options.owner_id}`);
@@ -124,9 +126,14 @@ const getAllProperties = (options, limit = 10) => {
   }
 
   // End off the query string by ordering it based on cost and grouping by property
+  queryString += `GROUP BY properties.id`;
+
+  if (options.minimum_rating) {
+    queryParams.push(options.minimum_rating);
+    queryString += ` HAVING avg(property_reviews.rating) >= $${queryParams.length}`;
+  }
   queryParams.push(limit);
   queryString += `
-  GROUP BY properties.id
   ORDER BY cost_per_night
   LIMIT $${queryParams.length};`;
 
