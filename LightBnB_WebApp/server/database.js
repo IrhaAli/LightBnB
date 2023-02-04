@@ -72,7 +72,7 @@ const getAllReservations = function(guest_id, limit = 10) {
   const res_deets = [guest_id, limit];
   const queryString =
     `SELECT reservations.id, properties.title, properties.cost_per_night, properties.number_of_bathrooms, properties.number_of_bedrooms,
-    properties.parking_spaces, properties.cover_photo_url, properties.thumbnail_photo_url reservations.start_date,
+    properties.parking_spaces, properties.cover_photo_url, properties.thumbnail_photo_url, reservations.start_date,
     avg(rating) as average_rating
       FROM reservations
       JOIN properties ON reservations.property_id = properties.id
