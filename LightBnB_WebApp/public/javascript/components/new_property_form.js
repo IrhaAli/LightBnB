@@ -86,7 +86,7 @@ $(() => {
   `);
   window.$newPropertyForm = $newPropertyForm;
 
-  // Because new address form is special
+  // Because new address form is special?
   $newPropertyForm.addressfield({
     json: 'javascript/libraries/addressfield/addressfield.min.json',
     fields: {
